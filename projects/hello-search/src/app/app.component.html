@@ -50,8 +50,11 @@
                 <sq-pager [results]="results"></sq-pager>
 
                 <div *ngFor="let record of results.records" class="record">
-                    <a href="{{record.url1}}">
+                    <a href="#" (click)="openDocument(record)">
                         <h3 [innerHtml]="record.displayTitle || record.title"></h3>
+                    </a>
+                    <a href="{{record.url1}}">
+                        <div class="source">{{record.url1}}</div>
                     </a>
                     <div class="source">{{record.url1}}</div>
                     <p *ngIf="record.relevantExtracts" [innerHTML]="record.relevantExtracts"></p>

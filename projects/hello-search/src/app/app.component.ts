@@ -10,6 +10,9 @@ import { SearchService } from '@sinequa/components/search';
 
 import { Action } from '@sinequa/components/action';
 import { IntlService, Locale } from '@sinequa/core/intl';
+import { Record } from '@sinequa/core/web-services';
+import { ModalService } from '@sinequa/core/modal';
+import { Preview } from './preview';
 
 // import { Observable } from 'rxjs';
 
@@ -32,7 +35,8 @@ export class AppComponent implements AfterViewInit {
         // public queryWebService: QueryWebService,
         public notificationsService: NotificationsService,
         public searchService: SearchService,
-        public intlService: IntlService) //
+        public intlService: IntlService,
+        public modalService: ModalService) //
     {
         this.searchControl = new FormControl("");
         this.form = this.formBuilder.group({
@@ -91,5 +95,10 @@ export class AppComponent implements AfterViewInit {
     deleteNotification(notification: Notification) {
         setTimeout(() => this.notificationsService.deleteNotification(notification), 5000);
         return true;
+    }
+
+    openDocument(record: Record) {
+        this.modalService.open(Preview, { model: record, fullscreen: true });
+        return false;
     }
 }

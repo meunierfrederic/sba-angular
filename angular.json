@@ -108,8 +108,17 @@
               "projects/hello-search/src/favicon.ico",
               "projects/hello-search/src/assets"
             ],
+            "extractCss": true,
             "styles": [
-              "projects/hello-search/src/styles/app.scss"
+              {
+                "input": "projects/hello-search/src/styles/app.scss",
+                "bundleName": "app"
+              },
+              {
+                "input": "projects/hello-search/src/styles/preview.scss",
+                "bundleName": "preview",
+                "lazy": true
+              }
             ],
             "scripts": []
           },
@@ -173,8 +182,17 @@
               "projects/hello-search/src/favicon.ico",
               "projects/hello-search/src/assets"
             ],
+            "extractCss": true,
             "styles": [
-              "projects/hello-search/src/styles/app.scss"
+              {
+                "input": "projects/hello-search/src/styles/app.scss",
+                "bundleName": "app"
+              },
+              {
+                "input": "projects/hello-search/src/styles/preview.scss",
+                "bundleName": "preview",
+                "lazy": true
+              }
             ],
             "scripts": []
           }
@@ -245,7 +263,7 @@
                 "input": "projects/vanilla-search/src/styles/preview.scss",
                 "bundleName": "preview",
                 "lazy": true
-              }            
+              }
             ],
             "scripts": []
           },

@@ -13,10 +13,13 @@ import { BsSearchModule } from '@sinequa/components/search';
 import { BsFacetModule } from '@sinequa/components/facet';
 import { BsActionModule } from '@sinequa/components/action';
 import { BsAutocompleteModule } from '@sinequa/components/autocomplete';
+import { BsPreviewModule } from '@sinequa/components/preview';
+import { BsModalModule } from '@sinequa/components/modal';
 
 import { AppComponent } from "./app.component";
 import {AutocompleteCustom} from "./autocomplete-custom.directive";
 import { environment } from "../environments/environment";
+import { Preview } from './preview';
 
 import { LocalesConfig, Locale, LocaleData } from "@sinequa/core/intl";
 import enLocale from "../locales/en";
@@ -66,10 +69,13 @@ export const startConfig: StartConfig = {
         BsFacetModule,
         BsActionModule,
         BsAutocompleteModule,
+        BsPreviewModule,
+        BsModalModule,
     ],
     declarations: [
         AppComponent,
         AutocompleteCustom,
+        Preview,
     ],
     providers: [
         // {provide: APP_INITIALIZER, useFactory: StartConfigInitializer, deps: [StartConfigWebService], multi: true}, 
