@@ -1,16 +1,31 @@
-import {NgModule/*, APP_INITIALIZER*/} from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
-import {RouterModule} from '@angular/router';
-import {LocationStrategy, HashLocationStrategy} from "@angular/common";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {WebServicesModule, StartConfigWebService, StartConfig} from "@sinequa/core/web-services";
-import {LoginModule} from "@sinequa/core/login";
-import {IntlModule} from "@sinequa/core/intl";
-import {ModalModule} from "@sinequa/core/modal";
+import { NgModule/*, APP_INITIALIZER*/ } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { RouterModule } from '@angular/router';
+import { LocationStrategy, HashLocationStrategy } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { WebServicesModule, StartConfigWebService, StartConfig } from "@sinequa/core/web-services";
+import { LoginModule } from "@sinequa/core/login";
+import { IntlModule } from "@sinequa/core/intl";
+import { ModalModule } from "@sinequa/core/modal";
+import { DefaultLocalesConfig } from "@sinequa/core";
 
-import {DefaultLocalesConfig} from "@sinequa/core";
-import {AppComponent} from "./app.component";
-import {environment} from "../environments/environment";
+import { BsSearchModule } from '@sinequa/components/search';
+import { BsFacetModule } from '@sinequa/components/facet';
+
+import { AppComponent } from "./app.component";
+import { environment } from "../environments/environment";
+
+import { LocalesConfig, Locale } from "@sinequa/core/intl";
+import enLocale from "../locales/en";
+import frLocale from "../locales/fr";
+
+export class AppLocalesConfig implements LocalesConfig {
+    locales: Locale[] = [
+        { name: "en", display: "msg#locale.en", data: enLocale },
+        { name: "fr", display: "msg#locale.fr", data: frLocale },
+    ];
+    defaultLocale: Locale = this.locales[0];
+}
 
 export function StartConfigInitializer(startConfigWebService: StartConfigWebService): () => Promise<StartConfig> {
     const init = () => startConfigWebService.fetchPreLoginAppConfig().toPromise();
@@ -18,8 +33,10 @@ export function StartConfigInitializer(startConfigWebService: StartConfigWebServ
 }
 
 export const startConfig: StartConfig = {
-    app: "your-app-name",
-    production: environment.production
+    app: "training",
+    autoSAMLProvider: "identity-dev",
+    production: environment.production,
+    auditEnabled: true
 };
 
 @NgModule({
@@ -30,16 +47,18 @@ export const startConfig: StartConfig = {
         ReactiveFormsModule,
 
         WebServicesModule.forRoot(startConfig),
-        IntlModule.forRoot(DefaultLocalesConfig),
+        IntlModule.forRoot(AppLocalesConfig),
         LoginModule.forRoot(), // Just use default login modal
         ModalModule.forRoot(),
+        BsSearchModule.forRoot({ routes: [""] }),
+        BsFacetModule,
     ],
     declarations: [
         AppComponent,
     ],
     providers: [
         // {provide: APP_INITIALIZER, useFactory: StartConfigInitializer, deps: [StartConfigWebService], multi: true}, 
-        {provide: LocationStrategy, useClass: HashLocationStrategy},
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
     ],
     bootstrap: [
         AppComponent

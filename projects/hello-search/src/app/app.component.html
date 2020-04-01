@@ -1,21 +1,50 @@
 <div class="search">
     <h1>Hello Search 🔍</h1>
     <form novalidate [formGroup]="form">
-        <input type="text" placeholder="Enter search terms..." formControlName="search" spellcheck="false" autocomplete="off" [attr.disabled]="!loginService.complete? '' : null">
-        <button type="submit" (click)="search()" [attr.disabled]="!loginService.complete? '' : null">Search</button>
-        <button *ngIf="results$ | async" type="button" (click)="clear()">Clear</button>
+        <input type="text" placeholder="{{'msg#search.placeholder' | sqMessage}}" formControlName="search" spellcheck="false"
+            autocomplete="off" [attr.disabled]="!loginService.complete? '' : null">
+        <button type="submit" (click)="search()"
+            [attr.disabled]="!loginService.complete? '' : null">{{ 'msg#search.button' | sqMessage }}</button>
+        <!-- <button *ngIf="results$ | async" type="button" (click)="clear()">Clear</button> -->
+        <button *ngIf="searchService.resultsStream | async" type="button"
+            (click)="clear()">{{ 'msg#search.clear' | sqMessage }}</button>
     </form>
-    <div *ngIf="results$ | async; let results">
-        <hr>    
-        <div *ngFor="let record of results.records" class="record">
-            <a href="{{record.url1}}">
-                <h3 [innerHtml]="record.displayTitle || record.title"></h3>
-            </a>
-            <div class="source">{{record.url1}}</div>
-            <p *ngIf="record.relevantExtracts" [innerHTML]="record.relevantExtracts"></p>       
+
+    <hr>
+    <div class="container-fluid mt-3 mb-5" *ngIf="loginService.complete">
+        <!-- <div *ngIf="results$ | async; let results"> -->
+        <div class="row" *ngIf="searchService.resultsStream | async; let results">
+
+            <div class="col-md-4 col-lg-3 col-xl-2">
+                <sq-facet-card [title]="'msg#facet.company.title'" [icon]="'fas fa-building'">
+                    <sq-facet-list #facet [results]="results" [aggregation]="'Company'"></sq-facet-list>
+                </sq-facet-card>
+
+                <sq-facet-card [title]="'msg#facet.treepath.title'" [icon]="'fas fa-sitemap'">
+                    <sq-facet-tree #facet [results]="results" [aggregation]="'Treepath'" [allowExclude]="true">
+                    </sq-facet-tree>
+                </sq-facet-card>
+            </div>
+
+            <div class=" col-md-8 col-lg-9 col-xl-10">
+                <sq-tabs [results]="results"></sq-tabs>
+                <sq-loading-bar></sq-loading-bar>
+                <sq-pager [results]="results"></sq-pager>
+
+                <div *ngFor="let record of results.records" class="record">
+                    <a href="{{record.url1}}">
+                        <h3 [innerHtml]="record.displayTitle || record.title"></h3>
+                    </a>
+                    <div class="source">{{record.url1}}</div>
+                    <p *ngIf="record.relevantExtracts" [innerHTML]="record.relevantExtracts"></p>
+                </div>
+
+            </div>
+
         </div>
     </div>
-    <hr>    
+
+    <hr>
     <button *ngIf="loginService.complete" type="button" (click)="logout()">Logout</button>
     <button *ngIf="!loginService.complete" type="button" (click)="login()">Login</button>
     <ng-container *ngIf="notificationsService.notificationsStream | async as notification">
