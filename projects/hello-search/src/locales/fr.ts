@@ -28,6 +28,7 @@ let appMessages = {
         button: "Chercher",
         placeholder: "Termes de recherche...",
         clear: "Effacer",
+        recentQuery: "Recherche récente",
     },
 
     facet: {

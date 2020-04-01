@@ -14,7 +14,7 @@ let appMessages = {
     locale: {
         en: "English",
         fr: 'French',
-        de:'German',
+        de: 'German',
     },
 
     results: {
@@ -28,10 +28,11 @@ let appMessages = {
         button: "Search",
         placeholder: "Enter search terms...",
         clear: "Clear",
+        recentQuery: "Recent Query",
     },
 
-    facet:{
-        loadMore:"Load more items..."
+    facet: {
+        loadMore: "Load more items..."
     }
 
 }

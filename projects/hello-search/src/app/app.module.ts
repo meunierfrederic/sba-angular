@@ -12,13 +12,16 @@ import { DefaultLocalesConfig } from "@sinequa/core";
 import { BsSearchModule } from '@sinequa/components/search';
 import { BsFacetModule } from '@sinequa/components/facet';
 import { BsActionModule } from '@sinequa/components/action';
+import { BsAutocompleteModule } from '@sinequa/components/autocomplete';
 
 import { AppComponent } from "./app.component";
+import {AutocompleteCustom} from "./autocomplete-custom.directive";
 import { environment } from "../environments/environment";
 
 import { LocalesConfig, Locale, LocaleData } from "@sinequa/core/intl";
 import enLocale from "../locales/en";
 import frLocale from "../locales/fr";
+
 import { Observable, from } from 'rxjs';
 
 
@@ -62,9 +65,11 @@ export const startConfig: StartConfig = {
         BsSearchModule.forRoot({ routes: [""] }),
         BsFacetModule,
         BsActionModule,
+        BsAutocompleteModule,
     ],
     declarations: [
         AppComponent,
+        AutocompleteCustom,
     ],
     providers: [
         // {provide: APP_INITIALIZER, useFactory: StartConfigInitializer, deps: [StartConfigWebService], multi: true}, 
