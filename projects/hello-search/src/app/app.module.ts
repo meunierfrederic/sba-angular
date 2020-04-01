@@ -11,20 +11,29 @@ import { DefaultLocalesConfig } from "@sinequa/core";
 
 import { BsSearchModule } from '@sinequa/components/search';
 import { BsFacetModule } from '@sinequa/components/facet';
+import { BsActionModule } from '@sinequa/components/action';
 
 import { AppComponent } from "./app.component";
 import { environment } from "../environments/environment";
 
-import { LocalesConfig, Locale } from "@sinequa/core/intl";
+import { LocalesConfig, Locale, LocaleData } from "@sinequa/core/intl";
 import enLocale from "../locales/en";
 import frLocale from "../locales/fr";
+import { Observable, from } from 'rxjs';
+
 
 export class AppLocalesConfig implements LocalesConfig {
     locales: Locale[] = [
         { name: "en", display: "msg#locale.en", data: enLocale },
         { name: "fr", display: "msg#locale.fr", data: frLocale },
+        { name: "de", display: "msg#locale.de" },
     ];
     defaultLocale: Locale = this.locales[0];
+
+    loadLocale(locale: string): Observable<LocaleData> {
+        console.warn("Loading locale: " + locale);
+        return from(import('../locales/' + locale).then(m => m.default));
+    }
 }
 
 export function StartConfigInitializer(startConfigWebService: StartConfigWebService): () => Promise<StartConfig> {
@@ -52,6 +61,7 @@ export const startConfig: StartConfig = {
         ModalModule.forRoot(),
         BsSearchModule.forRoot({ routes: [""] }),
         BsFacetModule,
+        BsActionModule,
     ],
     declarations: [
         AppComponent,

@@ -8,6 +8,9 @@ import { NotificationsService, Notification } from "@sinequa/core/notification";
 
 import { SearchService } from '@sinequa/components/search';
 
+import { Action } from '@sinequa/components/action';
+import { IntlService, Locale } from '@sinequa/core/intl';
+
 // import { Observable } from 'rxjs';
 
 @Component({
@@ -18,6 +21,8 @@ import { SearchService } from '@sinequa/components/search';
 export class AppComponent implements AfterViewInit {
     searchControl: FormControl;
     form: FormGroup;
+    languageActions: Action[];
+
     // results$: Observable<Results> | undefined;
 
     constructor(
@@ -26,16 +31,35 @@ export class AppComponent implements AfterViewInit {
         public appService: AppService,
         // public queryWebService: QueryWebService,
         public notificationsService: NotificationsService,
-        public searchService: SearchService) {
+        public searchService: SearchService,
+        public intlService: IntlService) //
+    {
         this.searchControl = new FormControl("");
         this.form = this.formBuilder.group({
             search: this.searchControl
         });
+
         this.searchService.queryStream.subscribe({
             next: (query) => {
                 this.searchControl.setValue((query && query.text) || '');
             }
         });
+
+        // Create one action (button) for each language
+        this.languageActions = this.intlService.locales.map(locale =>
+            new Action({
+                text: locale.display,   // "French"
+                data: locale,   // French locale
+                selected: locale === this.intlService.currentLocale, // If this is the current locale
+                action: (item: Action, $event: UIEvent) => {    // On click, switch to this language
+                    this.intlService.use((item.data as Locale).name).subscribe(
+                        (value) => this.languageActions.forEach(a => a.update()));
+                },
+                updater: (action) => {  // Update the status of buttons
+                    action.selected = action.data === this.intlService.currentLocale;
+                }
+            })
+        );
     }
 
     ngAfterViewInit() {

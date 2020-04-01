@@ -1,8 +1,8 @@
 <div class="search">
     <h1>Hello Search 🔍</h1>
     <form novalidate [formGroup]="form">
-        <input type="text" placeholder="{{'msg#search.placeholder' | sqMessage}}" formControlName="search" spellcheck="false"
-            autocomplete="off" [attr.disabled]="!loginService.complete? '' : null">
+        <input type="text" placeholder="{{'msg#search.placeholder' | sqMessage}}" formControlName="search"
+            spellcheck="false" autocomplete="off" [attr.disabled]="!loginService.complete? '' : null">
         <button type="submit" (click)="search()"
             [attr.disabled]="!loginService.complete? '' : null">{{ 'msg#search.button' | sqMessage }}</button>
         <!-- <button *ngIf="results$ | async" type="button" (click)="clear()">Clear</button> -->
@@ -47,6 +47,7 @@
     <hr>
     <button *ngIf="loginService.complete" type="button" (click)="logout()">Logout</button>
     <button *ngIf="!loginService.complete" type="button" (click)="login()">Login</button>
+    <span [sq-action-buttons]="{items: languageActions}"></span>
     <ng-container *ngIf="notificationsService.notificationsStream | async as notification">
         <hr>
         <div *ngIf="deleteNotification(notification)" class="notification">

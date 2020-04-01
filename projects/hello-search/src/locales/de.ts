@@ -12,9 +12,9 @@ import { enSearch } from "@sinequa/components/search";
 let appMessages = {
 
     locale: {
-        en: "English",
-        fr: 'French',
-        de:'German',
+        en: "Englisch",
+        fr: 'Französisch',
+        de:'Deutsch',
     },
 
     results: {

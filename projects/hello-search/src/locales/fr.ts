@@ -14,6 +14,7 @@ let appMessages = {
     locale: {
         en: "Anglais",
         fr: 'Français',
+        de: 'Allemand',
     },
 
     results: {
@@ -29,8 +30,8 @@ let appMessages = {
         clear: "Effacer",
     },
 
-    facet:{
-        loadMore:"Plus d'items..."
+    facet: {
+        loadMore: "Plus d'items..."
     }
 
 }
