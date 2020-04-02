@@ -27,7 +27,9 @@ import enLocale from "../locales/en";
 import frLocale from "../locales/fr";
 
 import { Observable, from } from 'rxjs';
-
+import { HomeComponent } from './home/home.component';
+import { SearchComponent } from './search/search.component';
+import { SearchFormComponent } from './search-form/search-form.component';
 
 export class AppLocalesConfig implements LocalesConfig {
     locales: Locale[] = [
@@ -58,13 +60,17 @@ export const startConfig: StartConfig = {
 @NgModule({
     imports: [
         BrowserModule,
-        RouterModule.forRoot([]),
+        RouterModule.forRoot([
+            { path: "home", component: HomeComponent },
+            { path: "search", component: SearchComponent },
+            { path: "**", redirectTo: "home" }
+        ]),
         FormsModule,
         ReactiveFormsModule,
 
         WebServicesModule.forRoot(startConfig),
         IntlModule.forRoot(AppLocalesConfig),
-        LoginModule.forRoot(), // Just use default login modal
+        LoginModule, // Just use default login modal
         ModalModule.forRoot(),
         BsSearchModule.forRoot({ routes: [""] }),
         BsFacetModule,
@@ -78,6 +84,9 @@ export const startConfig: StartConfig = {
         AppComponent,
         AutocompleteCustom,
         Preview,
+        HomeComponent,
+        SearchComponent,
+        SearchFormComponent,
     ],
     providers: [
         // {provide: APP_INITIALIZER, useFactory: StartConfigInitializer, deps: [StartConfigWebService], multi: true}, 

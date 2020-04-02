@@ -182,7 +182,6 @@
               "projects/hello-search/src/favicon.ico",
               "projects/hello-search/src/assets"
             ],
-            "extractCss": true,
             "styles": [
               {
                 "input": "projects/hello-search/src/styles/app.scss",
