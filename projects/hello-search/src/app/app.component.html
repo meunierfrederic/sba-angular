@@ -1,5 +1,10 @@
 <div class="search">
-    <h1>Hello Search 🔍</h1>
+    <nav class="navbar navbar-expand px-0">
+        <h1 class="mr-auto">Hello Search 🔍</h1>
+        <ul class="navbar-nav navbar-right">
+            <sq-saved-queries-menu></sq-saved-queries-menu>
+        </ul>
+    </nav>
     <form novalidate [formGroup]="form">
         <div class="d-flex flex-column flex-grow-1 position-relative">
             <div class="input-group">
@@ -11,7 +16,6 @@
                 <div class=" input-group-append">
                     <button class="btn btn-primary" type="button" (click)="search()"
                         [attr.disabled]="!loginService.complete? '' : null">{{ 'msg#search.button' | sqMessage }}</button>
-                    <!-- <button *ngIf="results$ | async" type="button" (click)="clear()">Clear</button> -->
                     <button class="btn btn-light" *ngIf="searchService.resultsStream | async" type="button"
                         (click)="clear()">{{ 'msg#search.clear' | sqMessage }}</button>
                 </div>
@@ -34,10 +38,15 @@
         <div class="row" *ngIf="searchService.resultsStream | async; let results">
 
             <div class="col-md-4 col-lg-3 col-xl-2">
+                <sq-facet-card [title]="'msg#savedQueries.savedQueries'" [icon]="'fas fa-save'">
+                    <sq-facet-saved-queries #facet [maxQueries]="5" [searchRoute]=""></sq-facet-saved-queries>
+                </sq-facet-card>
+                <sq-facet-card [title]="'msg#recentQueries.recentQueries'" [icon]="'fas fa-save'">
+                    <sq-facet-recent-queries #facet [maxQueries]="5" [searchRoute]=""></sq-facet-recent-queries>
+                </sq-facet-card>
                 <sq-facet-card [title]="'msg#facet.company.title'" [icon]="'fas fa-building'">
                     <sq-facet-list #facet [results]="results" [aggregation]="'Company'"></sq-facet-list>
                 </sq-facet-card>
-
                 <sq-facet-card [title]="'msg#facet.treepath.title'" [icon]="'fas fa-sitemap'">
                     <sq-facet-tree #facet [results]="results" [aggregation]="'Treepath'" [allowExclude]="true">
                     </sq-facet-tree>
@@ -48,6 +57,10 @@
                 <sq-tabs [results]="results"></sq-tabs>
                 <sq-loading-bar></sq-loading-bar>
                 <sq-pager [results]="results"></sq-pager>
+                <button class="btn btn-success" *ngIf="searchService.resultsStream | async"
+                    (click)="savedQueriesService.createSavedQueryModal()">
+                    <i class="fas fa-save"></i>
+                </button>
 
                 <div *ngFor="let record of results.records" class="record">
                     <a href="#" (click)="openDocument(record)">

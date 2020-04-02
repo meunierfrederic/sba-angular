@@ -7,6 +7,8 @@ import { AppService } from "@sinequa/core/app-utils";
 import { NotificationsService, Notification } from "@sinequa/core/notification";
 
 import { SearchService } from '@sinequa/components/search';
+import { SavedQueriesService } from '@sinequa/components/saved-queries';
+import { RecentQueriesService } from '@sinequa/components/saved-queries';
 
 import { Action } from '@sinequa/components/action';
 import { IntlService, Locale } from '@sinequa/core/intl';
@@ -36,7 +38,10 @@ export class AppComponent implements AfterViewInit {
         public notificationsService: NotificationsService,
         public searchService: SearchService,
         public intlService: IntlService,
-        public modalService: ModalService) //
+        public modalService: ModalService,
+        public savedQueriesService: SavedQueriesService,
+        public recentQueriesService: RecentQueriesService,
+    ) //
     {
         this.searchControl = new FormControl("");
         this.form = this.formBuilder.group({

@@ -1,6 +1,6 @@
 import { NgModule/*, APP_INITIALIZER*/ } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { WebServicesModule, StartConfigWebService, StartConfig } from "@sinequa/core/web-services";
@@ -15,9 +15,10 @@ import { BsActionModule } from '@sinequa/components/action';
 import { BsAutocompleteModule } from '@sinequa/components/autocomplete';
 import { BsPreviewModule } from '@sinequa/components/preview';
 import { BsModalModule } from '@sinequa/components/modal';
+import { BsSavedQueriesModule } from '@sinequa/components/saved-queries';
 
 import { AppComponent } from "./app.component";
-import {AutocompleteCustom} from "./autocomplete-custom.directive";
+import { AutocompleteCustom } from "./autocomplete-custom.directive";
 import { environment } from "../environments/environment";
 import { Preview } from './preview';
 
@@ -71,6 +72,7 @@ export const startConfig: StartConfig = {
         BsAutocompleteModule,
         BsPreviewModule,
         BsModalModule,
+        BsSavedQueriesModule,
     ],
     declarations: [
         AppComponent,

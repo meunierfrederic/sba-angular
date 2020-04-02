@@ -8,6 +8,7 @@ import { Utils } from "@sinequa/core/base";
 import { enFacet } from "@sinequa/components/facet";
 import { enResult } from "@sinequa/components/result";
 import { enSearch } from "@sinequa/components/search";
+import {enSavedQueries} from "@sinequa/components/saved-queries";
 
 let appMessages = {
 
@@ -46,5 +47,5 @@ export default <LocaleData>{
         format: d3Format,
         time: d3Time
     },
-    messages: Utils.merge({}, enCore, enFacet, enResult, enSearch, appMessages)
+    messages: Utils.merge({}, enCore, enFacet, enResult, enSearch, enSavedQueries, appMessages)
 };
