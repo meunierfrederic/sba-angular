@@ -8,33 +8,33 @@ import { Utils } from "@sinequa/core/base";
 import { frFacet } from "@sinequa/components/facet";
 import { frResult } from "@sinequa/components/result";
 import { frSearch } from "@sinequa/components/search";
+import { frSavedQueries } from "@sinequa/components/saved-queries";
 
 let appMessages = {
 
     locale: {
-        en: "Anglais",
-        fr: 'Français',
-        de: 'Allemand',
+        en: "English",
+        fr: "Français",
+        de: "Allemand",
     },
 
-    results: {
-        resultsAllTab: "Tous",
-        tabPeople: "Personnes",
-        tabBusiness: "Organisations",
-        tabLocation: "Lieux"
+    app: {
+        login: "Login",
+        logout: "Logout",
     },
 
     search: {
         button: "Chercher",
         placeholder: "Termes de recherche...",
-        clear: "Effacer",
-        recentQuery: "Recherche récente",
+        clear: "Effacer"
     },
 
-    facet: {
-        loadMore: "Plus d'items..."
-    }
-
+    results: {
+        resultsAllTab: "Tous",
+        tabPeople: "Personnes",
+        tabBusiness: "Entreprises",
+        tabLocation: "Lieux"
+    },
 }
 
 export default <LocaleData>{
@@ -46,5 +46,5 @@ export default <LocaleData>{
         format: d3Format,
         time: d3Time
     },
-    messages: Utils.merge({}, frCore, frFacet, frResult, frSearch, appMessages)
+    messages: Utils.merge({}, frCore, frFacet, frResult, frSearch, frSavedQueries, appMessages)
 };

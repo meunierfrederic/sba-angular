@@ -1,8 +1,6 @@
 <router-outlet></router-outlet>
-
 <ng-container *ngIf="notificationsService.notificationsStream | async as notification">
-    <div *ngIf="deleteNotification(notification)" class="notification position-fixed"
-        style="bottom: 5px; right: 5px; width: 500px">
+    <div *ngIf="deleteNotification(notification)" class="notification position-fixed" style="bottom: 5px; right: 5px; width: 500px">
         <div *ngIf="notification.title" class="title">
             <span>{{notification.title | sqMessage}}</span>
             <hr>

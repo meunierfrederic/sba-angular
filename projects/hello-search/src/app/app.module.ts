@@ -1,13 +1,15 @@
-import { NgModule/*, APP_INITIALIZER*/ } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { WebServicesModule, StartConfigWebService, StartConfig } from "@sinequa/core/web-services";
+import { Observable, from } from 'rxjs';
+
+import { WebServicesModule, StartConfig } from "@sinequa/core/web-services";
 import { LoginModule } from "@sinequa/core/login";
-import { IntlModule } from "@sinequa/core/intl";
+import { IntlModule, LocaleData } from "@sinequa/core/intl";
 import { ModalModule } from "@sinequa/core/modal";
-import { DefaultLocalesConfig } from "@sinequa/core";
+import { LocalesConfig, Locale } from "@sinequa/core/intl";
 
 import { BsSearchModule } from '@sinequa/components/search';
 import { BsFacetModule } from '@sinequa/components/facet';
@@ -16,35 +18,28 @@ import { BsAutocompleteModule } from '@sinequa/components/autocomplete';
 import { BsPreviewModule } from '@sinequa/components/preview';
 import { BsModalModule } from '@sinequa/components/modal';
 import { BsSavedQueriesModule } from '@sinequa/components/saved-queries';
-import { SCREEN_SIZE_RULES } from '@sinequa/components/utils';
 
-import { AppComponent } from "./app.component";
-import { AutocompleteCustom } from "./autocomplete-custom.directive";
 import { environment } from "../environments/environment";
+import { AppComponent } from "./app.component";
 import { Preview } from './preview';
-
-import { LocalesConfig, Locale, LocaleData } from "@sinequa/core/intl";
-import enLocale from "../locales/en";
-import frLocale from "../locales/fr";
-
-import { Observable, from } from 'rxjs';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { SearchFormComponent } from './search-form/search-form.component';
-import { LoginLogoutComponent } from './login-logout/login-logout.component';
+import { SCREEN_SIZE_RULES } from '@sinequa/components/utils';
 
-// Screen size breakpoints (must be consistent with Bootstrap custom breakpoints in styles/app.scss)
-export const breakpoints = {
-    lg: "(min-width: 1000px)",
-    sm: "(min-width: 600px) and (max-width: 999px)",
-    xs: "(max-width: 599px)",
-}
+// Sinequa Core config
+export const startConfig: StartConfig = {
+    app: "training",
+    autoSAMLProvider: "identity",
+    production: environment.production,
+    auditEnabled: true
+};
 
+// Locales configuration
 export class AppLocalesConfig implements LocalesConfig {
     locales: Locale[] = [
-        { name: "en", display: "msg#locale.en", data: enLocale },
-        { name: "fr", display: "msg#locale.fr", data: frLocale },
-        { name: "de", display: "msg#locale.de" },
+        { name: "en", display: "msg#locale.en" },
+        { name: "fr", display: "msg#locale.fr" }
     ];
     defaultLocale: Locale = this.locales[0];
 
@@ -54,17 +49,12 @@ export class AppLocalesConfig implements LocalesConfig {
     }
 }
 
-export function StartConfigInitializer(startConfigWebService: StartConfigWebService): () => Promise<StartConfig> {
-    const init = () => startConfigWebService.fetchPreLoginAppConfig().toPromise();
-    return init;
+// Screen size breakpoints (consistent with Bootstrap custom breakpoints in app.scss)
+export const breakpoints = {
+    lg: "(min-width: 1000px)",
+    sm: "(min-width: 600px) and (max-width: 999px)",
+    xs: "(max-width: 599px)",
 }
-
-export const startConfig: StartConfig = {
-    app: "training",
-    autoSAMLProvider: "identity-dev",
-    production: environment.production,
-    auditEnabled: true
-};
 
 @NgModule({
     imports: [
@@ -79,29 +69,30 @@ export const startConfig: StartConfig = {
 
         WebServicesModule.forRoot(startConfig),
         IntlModule.forRoot(AppLocalesConfig),
-        LoginModule, // Just use default login modal
+        LoginModule.forRoot(), // Just use default login modal
         ModalModule.forRoot(),
-        BsSearchModule.forRoot({ routes: ["search"] }),
+
+        BsSearchModule.forRoot({ routes: ['search'] }),
         BsFacetModule,
         BsActionModule,
         BsAutocompleteModule,
         BsPreviewModule,
         BsModalModule,
-        BsSavedQueriesModule,
+        BsSavedQueriesModule
     ],
     declarations: [
         AppComponent,
-        AutocompleteCustom,
         Preview,
         HomeComponent,
         SearchComponent,
-        SearchFormComponent,
-        LoginLogoutComponent,
+        SearchFormComponent
+    ],
+    entryComponents: [
+        Preview
     ],
     providers: [
-        // {provide: APP_INITIALIZER, useFactory: StartConfigInitializer, deps: [StartConfigWebService], multi: true}, 
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        {provide: SCREEN_SIZE_RULES, useValue: breakpoints},
+        { provide: SCREEN_SIZE_RULES, useValue: breakpoints }
     ],
     bootstrap: [
         AppComponent

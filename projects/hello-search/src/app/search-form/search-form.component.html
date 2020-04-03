@@ -1,26 +1,26 @@
 <form novalidate [formGroup]="form">
     <div class="d-flex flex-column flex-grow-1 position-relative">
         <div class="input-group">
-            <input class="form-control" type="text" placeholder="{{'msg#search.placeholder' | sqMessage}}"
-                formControlName="search" spellcheck="false" autocomplete="off"
-                [attr.disabled]="!loginService.complete? '' : null" sqAutocompleteCustom
-                [off]="!loginService.complete || !appService.suggestQueries" [dropdown]="dropdown"
-                [suggestQuery]="appService.suggestQueries? appService.suggestQueries[0] : null" (submit)="search()">
-            <div class=" input-group-append">
-                <button class="btn btn-primary" type="button" (click)="search()"
-                    [attr.disabled]="!loginService.complete? '' : null">{{ 'msg#search.button' | sqMessage }}</button>
-                <button class="btn btn-light" *ngIf="searchService.resultsStream | async" type="button"
-                    (click)="clear()">{{ 'msg#search.clear' | sqMessage }}</button>
+            <input type="text" placeholder="{{ 'msg#search.placeholder' | sqMessage }}" formControlName="search"
+                class="form-control"
+                sqAutocomplete
+                [dropdown]="dropdown" 
+                [off]="!loginService.complete || !appService.suggestQueries"
+                [suggestQuery]="appService.suggestQueries? appService.suggestQueries[0] : null"
+                (submit)="search()">
+
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit" (click)="search()" [attr.disabled]="!loginService.complete? '' : null">{{ 'msg#search.button' | sqMessage }}</button>
+                <button class="btn btn-light" *ngIf="searchService.resultsStream | async" type="button" (click)="clear()">{{ 'msg#search.clear' | sqMessage }}</button>
             </div>
         </div>
+        
         <sq-autocomplete-list #dropdown>
             <ng-template #itemTpl let-item>
                 <div class="py-2" style="padding-left:0.75rem;">{{item.display}}
-                    <small *ngIf="item.category" class="ml-2 text-muted">
-                        {{(item.label || item.category) | sqMessage}}
-                    </small>
+                    <small *ngIf="item.category" class="ml-2 text-muted">{{(item.label || item.category) | sqMessage}}</small>
                 </div>
-            </ng-template>
+            </ng-template>    
         </sq-autocomplete-list>
     </div>
 </form>

@@ -1,21 +1,17 @@
 <div class="search container">
     <div class="row">
+
         <!-- Navbar -->
-        <nav class="navbar navbar-expand  col-12 d-flex">
-            <a [routerLink]="['/home']" class="mr-auto text-decoration-none"
-                *ngIf="ui.screenSizeIsGreater('xs') || !showFacet">
-                <h1><span *ngIf="ui.screenSizeIsGreaterOrEqual('lg')">Hello Search&nbsp;</span>🔍</h1>
+        <nav class="navbar navbar-expand col-12 d-flex">
+            <a [routerLink]="['/home']" class="text-decoration-none" *ngIf="ui.screenSizeIsGreater('xs') || !showFacet">
+                <h1>🔍<span *ngIf="ui.screenSizeIsGreaterOrEqual('lg')"> Hello Search</span></h1>
             </a>
-
-            <app-search-form class="flex-grow-1 mx-3" *ngIf="ui.screenSizeIsGreater('xs') || showFacet">
-            </app-search-form>
-
+            <app-search-form class="flex-grow-1 mx-sm-3" *ngIf="ui.screenSizeIsGreater('xs') || showFacet"></app-search-form>
             <button class="btn btn-light ml-auto" (click)="_showFacet = !_showFacet" *ngIf="ui.screenSizeIsLess('lg')">
                 <i class="fas fa-filter"></i>
             </button>
             <ul class="navbar-nav navbar-right" *ngIf="ui.screenSizeIsGreater('xs') || !showFacet">
-                <sq-saved-queries-menu [autoAdjustBreakpoint]="'lg'" [collapseBreakpoint]="'xs'">
-                </sq-saved-queries-menu>
+                <sq-saved-queries-menu [autoAdjustBreakpoint]="'lg'" [collapseBreakpoint]="'xs'"></sq-saved-queries-menu>
             </ul>
         </nav>
 
@@ -25,8 +21,6 @@
             <div class="col-lg-8" *ngIf="ui.screenSizeIsGreaterOrEqual('lg') || !_showFacet">
                 <sq-tabs [results]="results"></sq-tabs>
                 <sq-loading-bar></sq-loading-bar>
-                <sq-pager [results]="results"></sq-pager>
-
                 <div *ngFor="let record of results.records" class="record">
                     <a href="#" (click)="openDocument(record)">
                         <h3 [innerHtml]="record.displayTitle || record.title"></h3>
@@ -34,84 +28,36 @@
                     <a href="{{record.url1}}">
                         <div class="source">{{record.url1}}</div>
                     </a>
-                    <div class="source">{{record.url1}}</div>
-                    <p *ngIf="record.relevantExtracts" [innerHTML]="record.relevantExtracts"></p>
+                    <p *ngIf="record.relevantExtracts" [innerHTML]="record.relevantExtracts"></p>       
                 </div>
+                <sq-pager [results]="results"></sq-pager>
             </div>
-
+    
             <!-- Facets -->
             <div class="col-lg-4" *ngIf="showFacet">
-                <sq-facet-card [title]="'msg#savedQueries.savedQueries'" [icon]="'fas fa-save'">
-                    <sq-facet-saved-queries #facet [maxQueries]="5" [searchRoute]=""></sq-facet-saved-queries>
-                </sq-facet-card>
-                <sq-facet-card [title]="'msg#recentQueries.recentQueries'" [icon]="'fas fa-save'">
-                    <sq-facet-recent-queries #facet [maxQueries]="5" [searchRoute]=""></sq-facet-recent-queries>
-                </sq-facet-card>
-                <sq-facet-card [title]="'msg#facet.company.title'" [icon]="'fas fa-building'">
-                    <sq-facet-list #facet [results]="results" [aggregation]="'Company'"></sq-facet-list>
-                </sq-facet-card>
                 <sq-facet-card [title]="'msg#facet.treepath.title'" [icon]="'fas fa-sitemap'">
-                    <sq-facet-tree #facet [results]="results" [aggregation]="'Treepath'" [allowExclude]="true">
-                    </sq-facet-tree>
+                    <sq-facet-tree #facet [results]="results" [aggregation]="'Treepath'"></sq-facet-tree>
+                </sq-facet-card>
+                
+                <sq-facet-card [title]="'msg#facet.company.title'" [icon]="'fas fa-building'">
+                    <sq-facet-list #facet [results]="results" [aggregation]="'Company'" [allowExclude]="false" [allowAnd]="false"></sq-facet-list>
+                </sq-facet-card>
+        
+                <sq-facet-card [title]="'msg#savedQueries.savedQueries'" [icon]="'fas fa-save'">
+                    <sq-facet-saved-queries #facet [maxQueries]="5"></sq-facet-saved-queries>
                 </sq-facet-card>
             </div>
-
+    
             <!-- Footer -->
-            <div class="col-12">
+            <div class="col-12">                
+                <hr>    
                 <span [sq-action-buttons]="{items: languageActions}"></span>
-                <button class="btn btn-success" *ngIf="searchService.resultsStream | async"
-                    (click)="savedQueriesService.createSavedQueryModal()">
+                <button class="btn btn-success" (click)="savedQueriesService.createSavedQueryModal()">
                     <i class="fas fa-save"></i>
                 </button>
             </div>
-            <div class="col-12">
-                <app-login-logout></app-login-logout>
-            </div>
+
         </ng-container>
+        
     </div>
 </div>
-
-<!-- <hr>
-
-    <div class="container-fluid mt-3 mb-5" *ngIf="loginService.complete">
-        <div class="row" *ngIf="searchService.resultsStream | async; let results">
-            <div class=" col-md-8 col-lg-9 col-xl-10">
-                <sq-tabs [results]="results"></sq-tabs>
-                <sq-loading-bar></sq-loading-bar>
-                <sq-pager [results]="results"></sq-pager>
-
-                <div *ngFor="let record of results.records" class="record">
-                    <a href="#" (click)="openDocument(record)">
-                        <h3 [innerHtml]="record.displayTitle || record.title"></h3>
-                    </a>
-                    <a href="{{record.url1}}">
-                        <div class="source">{{record.url1}}</div>
-                    </a>
-                    <div class="source">{{record.url1}}</div>
-                    <p *ngIf="record.relevantExtracts" [innerHTML]="record.relevantExtracts"></p>
-                </div>
-
-            </div>
-
-            <div class="col-md-4 col-lg-3 col-xl-2">
-                <sq-facet-card [title]="'msg#savedQueries.savedQueries'" [icon]="'fas fa-save'">
-                    <sq-facet-saved-queries #facet [maxQueries]="5" [searchRoute]=""></sq-facet-saved-queries>
-                </sq-facet-card>
-                <sq-facet-card [title]="'msg#recentQueries.recentQueries'" [icon]="'fas fa-save'">
-                    <sq-facet-recent-queries #facet [maxQueries]="5" [searchRoute]=""></sq-facet-recent-queries>
-                </sq-facet-card>
-                <sq-facet-card [title]="'msg#facet.company.title'" [icon]="'fas fa-building'">
-                    <sq-facet-list #facet [results]="results" [aggregation]="'Company'"></sq-facet-list>
-                </sq-facet-card>
-                <sq-facet-card [title]="'msg#facet.treepath.title'" [icon]="'fas fa-sitemap'">
-                    <sq-facet-tree #facet [results]="results" [aggregation]="'Treepath'" [allowExclude]="true">
-                    </sq-facet-tree>
-                </sq-facet-card>
-            </div>
-
-        </div>
-    </div>
-
-    <hr>
-</div>
--->

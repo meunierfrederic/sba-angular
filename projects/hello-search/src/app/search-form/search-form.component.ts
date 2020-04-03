@@ -1,40 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { AppService } from '@sinequa/core/app-utils';
 import { SearchService } from '@sinequa/components/search';
 import { LoginService } from '@sinequa/core/login';
-import { AppService } from '@sinequa/core/app-utils';
 
 @Component({
   selector: 'app-search-form',
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.scss']
 })
-export class SearchFormComponent implements OnInit {
-
+export class SearchFormComponent {
   searchControl: FormControl;
   form: FormGroup;
 
   constructor(
-    public appService: AppService,
     protected formBuilder: FormBuilder,
     public loginService: LoginService,
-    public searchService: SearchService,
-  ) //
-  {
-    this.searchControl = new FormControl("");
+    public appService: AppService,
+    public searchService: SearchService) {
+    
+    this.searchControl = new FormControl();
     this.form = this.formBuilder.group({
-      search: this.searchControl
+        search: this.searchControl
     });
 
     this.searchService.queryStream.subscribe({
-      next: (query) => {
-        this.searchControl.setValue((query && query.text) || '');
-      }
+        next: (query) => {
+            this.searchControl.setValue((query && query.text) || '');
+        }
     });
 
-  }
-
-  ngOnInit(): void {
   }
 
   search() {
@@ -44,8 +39,8 @@ export class SearchFormComponent implements OnInit {
   }
 
   clear() {
-    this.searchService.clear();
-    this.searchControl.setValue("");
+      this.searchService.clear();
+      this.searchControl.setValue("");
   }
 
 }

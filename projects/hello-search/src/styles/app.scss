@@ -1,17 +1,19 @@
+@import "~@angular/cdk/overlay-prebuilt";
+
 // Overriding Bootstrap variables
 $grid-breakpoints: (
-    xs: 0,
-    sm: 600px,
-    lg: 1000px
+        xs: 0,
+        sm: 600px,
+        lg: 1000px
 );
 
 $container-max-widths: (
-    sm: 800px,
-    lg: 1200px
+        sm: 800px,
+        lg: 1200px
 );
 
 // Bootstrap styles
-@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap"; 
 
 /*** Fontawesome ***/
 $fa-font-path: "@fortawesome/fontawesome-free/webfonts";
@@ -20,7 +22,26 @@ $fa-font-path: "@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 
-@import "~@angular/cdk/overlay-prebuilt";
-
 @import "../../../components/action/bootstrap/action.scss";
 
+body {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #3434d6;
+}
+
+.record .match-highlight {
+    font-weight: bold;
+    font-style: italic;
+}
+
+// Align dropdown to the right side
+.navbar-right {
+    .dropdown-menu {
+        right: 0;
+        left: auto; // Reset the default from `.dropdown-menu`
+    }
+}
