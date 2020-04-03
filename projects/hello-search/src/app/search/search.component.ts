@@ -8,6 +8,7 @@ import { Action } from '@sinequa/components/action';
 import { Record } from '@sinequa/core/web-services';
 import { Preview } from '../preview';
 import { LoginService } from '@sinequa/core/login';
+import { UIService } from '@sinequa/components/utils';
 
 @Component({
   selector: 'app-search',
@@ -17,6 +18,7 @@ import { LoginService } from '@sinequa/core/login';
 export class SearchComponent implements OnInit {
 
   languageActions: Action[];
+  _showFacet: boolean = false;
 
   constructor(
     public appService: AppService,
@@ -26,6 +28,7 @@ export class SearchComponent implements OnInit {
     public modalService: ModalService,
     public savedQueriesService: SavedQueriesService,
     public recentQueriesService: RecentQueriesService,
+    public ui: UIService,
   ) //
   {
 
@@ -49,12 +52,8 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  login() {
-    this.loginService.login();
-  }
-
-  logout() {
-    this.loginService.logout();
+  get showFacet(): boolean {
+    return this.ui.screenSizeIsGreaterOrEqual('lg') || this._showFacet;
   }
 
   openDocument(record: Record) {

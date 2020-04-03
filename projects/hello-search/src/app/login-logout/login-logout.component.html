@@ -1,0 +1,2 @@
+<button *ngIf="loginService.complete" type="button" (click)="logout()">Logout</button>
+<button *ngIf="!loginService.complete" type="button" (click)="login()">Login</button>

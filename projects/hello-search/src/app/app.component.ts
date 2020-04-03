@@ -23,7 +23,8 @@ import { SearchComponent } from './search/search.component';
     styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements AfterViewInit {
-    constructor(public loginService: LoginService,
+    constructor(
+        public loginService: LoginService,
         public notificationsService: NotificationsService,
     ) //
     {

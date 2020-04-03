@@ -16,6 +16,7 @@ import { BsAutocompleteModule } from '@sinequa/components/autocomplete';
 import { BsPreviewModule } from '@sinequa/components/preview';
 import { BsModalModule } from '@sinequa/components/modal';
 import { BsSavedQueriesModule } from '@sinequa/components/saved-queries';
+import { SCREEN_SIZE_RULES } from '@sinequa/components/utils';
 
 import { AppComponent } from "./app.component";
 import { AutocompleteCustom } from "./autocomplete-custom.directive";
@@ -30,6 +31,14 @@ import { Observable, from } from 'rxjs';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { SearchFormComponent } from './search-form/search-form.component';
+import { LoginLogoutComponent } from './login-logout/login-logout.component';
+
+// Screen size breakpoints (must be consistent with Bootstrap custom breakpoints in styles/app.scss)
+export const breakpoints = {
+    lg: "(min-width: 1000px)",
+    sm: "(min-width: 600px) and (max-width: 999px)",
+    xs: "(max-width: 599px)",
+}
 
 export class AppLocalesConfig implements LocalesConfig {
     locales: Locale[] = [
@@ -87,10 +96,12 @@ export const startConfig: StartConfig = {
         HomeComponent,
         SearchComponent,
         SearchFormComponent,
+        LoginLogoutComponent,
     ],
     providers: [
         // {provide: APP_INITIALIZER, useFactory: StartConfigInitializer, deps: [StartConfigWebService], multi: true}, 
         { provide: LocationStrategy, useClass: HashLocationStrategy },
+        {provide: SCREEN_SIZE_RULES, useValue: breakpoints},
     ],
     bootstrap: [
         AppComponent
