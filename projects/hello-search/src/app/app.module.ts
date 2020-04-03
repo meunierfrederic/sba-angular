@@ -72,7 +72,7 @@ export const startConfig: StartConfig = {
         IntlModule.forRoot(AppLocalesConfig),
         LoginModule, // Just use default login modal
         ModalModule.forRoot(),
-        BsSearchModule.forRoot({ routes: [""] }),
+        BsSearchModule.forRoot({ routes: ["search"] }),
         BsFacetModule,
         BsActionModule,
         BsAutocompleteModule,

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AppService } from '@sinequa/core/app-utils';
 import { SearchService } from '@sinequa/components/search';
 import { IntlService, Locale } from '@sinequa/core/intl';
@@ -17,31 +16,18 @@ import { LoginService } from '@sinequa/core/login';
 })
 export class SearchComponent implements OnInit {
 
-  searchControl: FormControl;
-  form: FormGroup;
   languageActions: Action[];
 
   constructor(
-    protected formBuilder: FormBuilder,
     public appService: AppService,
-    public searchService: SearchService,
     public loginService: LoginService,
+    public searchService: SearchService,
     public intlService: IntlService,
     public modalService: ModalService,
     public savedQueriesService: SavedQueriesService,
     public recentQueriesService: RecentQueriesService,
   ) //
   {
-    this.searchControl = new FormControl("");
-    this.form = this.formBuilder.group({
-      search: this.searchControl
-    });
-
-    this.searchService.queryStream.subscribe({
-      next: (query) => {
-        this.searchControl.setValue((query && query.text) || '');
-      }
-    });
 
     // Create one action (button) for each language
     this.languageActions = this.intlService.locales.map(locale =>
@@ -69,19 +55,6 @@ export class SearchComponent implements OnInit {
 
   logout() {
     this.loginService.logout();
-  }
-
-  search() {
-    this.searchService.clearQuery();
-    this.searchService.query.text = this.searchControl.value || '';
-    this.searchService.searchText();
-    // this.results$ = this.queryWebService.getResults(query);
-  }
-
-  clear() {
-    //this.results$ = undefined;
-    this.searchService.clear();
-    this.searchControl.setValue("");
   }
 
   openDocument(record: Record) {
