@@ -37,6 +37,7 @@
     "@formatjs/intl-relativetimeformat": "^4.5.9",
     "@fortawesome/fontawesome-free": "^5.12.1",
     "@swimlane/ngx-charts": "^13.0.2",
+    "@types/jest": "^25.1.5",
     "atomicjs": "^4.4.1",
     "bootstrap": "^4.4.1",
     "classlist.js": "^1.1.20150312",
