@@ -1,0 +1,2 @@
+ng serve hello-search --ssl=true --proxyConfig=./projects/hello-search/src/proxy.conf.json
+ng serve hello-search --ssl=true --proxyConfig=./projects/hello-search/src/localproxy.conf.json

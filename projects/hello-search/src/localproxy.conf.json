@@ -1,0 +1,13 @@
+{
+    "/api": {
+      "target": "http://sinequa",
+      "secure": false,
+      "changeOrigin": true
+    },
+    
+    "/xdownload": {
+        "target": "http://sinequa",
+        "secure": false,
+        "changeOrigin": true
+    }
+}

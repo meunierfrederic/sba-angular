@@ -27,10 +27,17 @@ import { SearchComponent } from './search/search.component';
 import { SearchFormComponent } from './search-form/search-form.component';
 import { SCREEN_SIZE_RULES } from '@sinequa/components/utils';
 
-// Sinequa Core config
+// Sinequa Core config using online Sinequa Es
 export const startConfig: StartConfig = {
     app: "training",
     autoSAMLProvider: "identity",
+    production: environment.production,
+    auditEnabled: true
+};
+
+// Sinequa Core config using local Sinequa ES
+export const localStartConfig : StartConfig = {
+    app: "hello-search",
     production: environment.production,
     auditEnabled: true
 };
@@ -67,7 +74,8 @@ export const breakpoints = {
         FormsModule,
         ReactiveFormsModule,
 
-        WebServicesModule.forRoot(startConfig),
+//        WebServicesModule.forRoot(startConfig),
+        WebServicesModule.forRoot(localStartConfig),
         IntlModule.forRoot(AppLocalesConfig),
         LoginModule.forRoot(), // Just use default login modal
         ModalModule.forRoot(),
